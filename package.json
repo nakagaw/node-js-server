@@ -1,0 +1,9 @@
+{
+  "version": "0.0.1",
+  "license": "MIT",
+  "devDependencies": {
+    "request": "^2.47.0",
+    "ws": "^0.4.32",
+    "ejs": "^2.3.1"
+  }
+}

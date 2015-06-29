@@ -38,9 +38,13 @@ exports.server = function() {
             sendFile(res, absPath, cache[absPath]);
             console.log('メモリからファイル供給してまっせ');
         } else {
-            fs.exists(absPath, function(exists) { //ファイルはあるか
-                if (exists) {
-                    fs.readFile(absPath, function(err, data) { //ディスクからファイルを読む
+            fs.open(absPath, 'r', 777, function(err, fd) {
+                if (err) {
+                    // そもそもない場合
+                    send404(res);
+                } else {
+                    // ある場合
+                    fs.readFile(absPath, function(err, data) {
                         if (err) {
                             send404(res);
                         } else {
@@ -49,8 +53,6 @@ exports.server = function() {
                             console.log('ディスクからファイル供給してまっせ');
                         }
                     });
-                } else {
-                    send404(res);
                 }
             });
         }
